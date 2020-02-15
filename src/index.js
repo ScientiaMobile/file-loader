@@ -15,7 +15,7 @@ export default function loader(content) {
 
   const context = options.context || this.rootContext;
 
-  const url = loaderUtils.interpolateName(
+  let url = loaderUtils.interpolateName(
     this,
     options.name || '[contenthash].[ext]',
     {
@@ -24,6 +24,10 @@ export default function loader(content) {
       regExp: options.regExp,
     }
   );
+
+  if (options.keepQueryString) {
+    url += this.resourceQuery;
+  }
 
   let outputPath = url;
 
